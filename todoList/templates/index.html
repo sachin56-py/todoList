@@ -1,7 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>This is the homepage</h1>
+<br>
+<br>
+
+<div class="container">
+  <div class="col-lg-5 shadow mx-auto">
+    <div class="alert alert-success">
+      <h2>New Todo</h2>
+    </div>
+    <div class="card-body">
+      {% if msg %}
+      <div class="alert alert-danger"  role="alert" >
+          {{msg}}
+      </div>
+      {% endif %}
+      <form action="{% url 'home' %}" method="POST">
+          {% csrf_token %}
+          
+          {{ form.as_p }}
+          <input type="submit" class="btn btn-primary" value="create">
+      </form>
+  </div>
+  </div>
+</div>
+
       
 {% endblock %}
 

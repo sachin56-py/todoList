@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import AppUser
+from .models import AppUser, todo
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -14,3 +14,8 @@ class UserLoginForm(forms.ModelForm):
     class Meta:
         fields = ["email", "password"]
         model = AppUser
+
+class todoForm(forms.ModelForm):
+    class Meta:
+        fields = ['title', 'details', 'status', 'priority']
+        model = todo
