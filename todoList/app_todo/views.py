@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserLoginForm, todoForm
 from .models import AppUser
+from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
@@ -14,12 +15,19 @@ def login(request):
     if request.method=="POST":
         request_email = request.POST.get("email")
         request_password = request.POST.get('password')
-        user = AppUser.objects.get(email=request_email)
-        if user.password == request_password:
-            request.session["session_email"] = user.email
-            return redirect("home")
-        else:
-            context.setdefault("msg", "Username or password is incorrect !!")
+        
+        try:
+            user = AppUser.objects.get(email=request_email)
+            if user is not None:
+                if user.password == request_password:
+                    request.session["session_email"] = user.email
+                    return redirect("home")
+
+                else:
+                    context.setdefault("msg", "Username or password is incorrect !!")
+                    return render(request, "login.html", context=context)
+            
+        except Exception as e:
             return render(request, "login.html", context=context)
     return render(request, "login.html", context=context)
 
@@ -38,4 +46,7 @@ def register(request):
     return render(request, "register.html", context=context)
 
 def logout(request):
-    pass
+    if not request.session.has_key("session_email"):
+        return redirect("login")
+    del request.session["session_email"]
+    return redirect("login")

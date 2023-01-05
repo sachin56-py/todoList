@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 
+{% block loggedIn %}
+<li class="nav-item">
+  <a class="nav-link" href="/login">Login</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/register">Sign Up</a>
+</li>
+{% endblock %}
+<li class="nav-item">
+  <a class="nav-link" href="/login">Login</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="/register">Sign Up</a>
+</li>
 {% block content %}
+
 
 <br>
 <br>
@@ -9,11 +24,13 @@
   <h2>Login  Page</h2>
 </div>
 <div class="p-4">
+
   {% if msg %}
   <div class="alert alert-danger"  role="alert" >
-      {{msg}}
+    {{msg}}
   </div>
   {% endif %}
+
   <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     {{ forms.as_p }}
