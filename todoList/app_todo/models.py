@@ -7,11 +7,12 @@ class AppUser(models.Model):
     email = models.EmailField(unique=True)
     contact = models.CharField(max_length=200)
 
-
 class todo(models.Model):
-    choices_status = [('C', 'completed'),
+    choices_status = [
+    ('C', 'completed'),
     ('P', 'pending'),
     ]
+    
     priority_choices = [
     ('1', '1'),
     ('2', '2'),

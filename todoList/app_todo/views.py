@@ -1,12 +1,25 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserLoginForm, todoForm
-from .models import AppUser
+from .models import AppUser, todo
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+@csrf_exempt
 def home(request):
+    if not request.session.has_key("session_email"):
+        return redirect("login")
     form = todoForm()
     context = {'form': form}
+    if request.method == "POST":
+        todos = todo()
+        todos.title = request.POST.get('title')
+        todos.details = request.POST.get('title')
+        todos.status = request.POST.get('status')
+        todos.date = request.POST.get('date')
+        todos.priority = request.POST.get('priority')
+        todos.save()
+        return redirect("home")
     return render(request, "index.html", context=context)
 
 def login(request):
@@ -31,7 +44,6 @@ def login(request):
             return render(request, "login.html", context=context)
     return render(request, "login.html", context=context)
 
-
 def register(request):
     form = UserRegistrationForm()
     context = {"forms": form}
@@ -50,3 +62,13 @@ def logout(request):
         return redirect("login")
     del request.session["session_email"]
     return redirect("login")
+
+# def todo_show(request):
+#     if request.session.has_key("session_email"):
+#         user = request.user
+#         print(user)
+#         data = todo.objects.get()
+#         context = {"data": data}
+#         return render(request, "index.html", context)
+#     else:
+#         return redirect("register")

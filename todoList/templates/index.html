@@ -9,30 +9,45 @@
 
 
 {% block content %}
+<li class="nav-item">
+  <a class="nav-link" href="/show">show</a>
+</li>
 
 <br>
-<br>
 
-<div class="container">
-  <div class="col-lg-5 shadow mx-auto">
-    <div class="alert alert-success">
-      <h2>New Todo</h2>
-    </div>
-    <div class="card-body">
-      {% if msg %}
-      <div class="alert alert-danger"  role="alert" >
-          {{msg}}
+<div>
+  <div class="container pt-4">
+    <div class="row p-0 mt-2">
+      <div class="col-lg-4 mx-auto shadow">
+        <div class="alert alert-success">
+          <h2>New Todo</h2>
+        </div>
+        <div class="card-body">
+          {% if msg %}
+          <div class="alert alert-danger"  role="alert" >
+              {{msg}}
+          </div>
+          {% endif %}
+          <form action="{% url 'home' %}" method="POST">
+              {% csrf_token %}
+              
+              {{ form.as_p }}
+              <input type="submit" class="btn btn-primary" value="create">
+          </form>
+        </div>
       </div>
-      {% endif %}
-      <form action="{% url 'home' %}" method="POST">
-          {% csrf_token %}
-          
-          {{ form.as_p }}
-          <input type="submit" class="btn btn-primary" value="create">
-      </form>
-  </div>
+      <div class="col">
+        <div class="border">
+            ycsdiyckavsdhc asdhcjbasdhvcsd cashdcvasd
+            cashdvcashdvasdvhbcasdhbc
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+  <br>
+
 
       
 {% endblock %}
